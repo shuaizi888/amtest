@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from models import case_interface_table,run_interface_table
-from django.shortcuts import render
+from models import case_interface_table,run_interface_table,User
+from django.shortcuts import render,render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
@@ -32,13 +32,14 @@ def case_delete_data(request):
 #修改测试用例
 @csrf_exempt
 def case_modify_data(request):
+    exresult = request.POST.get('exresult')
     mcaseid  = request.POST.get('caseid')
     MdfData = case_interface_table.objects.get(id=mcaseid)
-    MdfData.ICaseURL = request.POST.get('eurl')
-    MdfData.ICaseDescription = request.POST.get('edesc')
-    MdfData.ICaseMethod = request.POST.get('emethod')
-    MdfData.ICase_Data = request.POST.get('edata')
-    MdfData.ICase_ExResult = request.POST.get('eresult')
+    MdfData.ICaseURL = request.POST.get('url')
+    MdfData.ICaseDescription = request.POST.get('desc')
+    MdfData.ICaseMethod = request.POST.get('method')
+    MdfData.ICase_Data = request.POST.get('data')
+    MdfData.ICase_ExResult = exresult
     MdfData.save()
     return HttpResponse(request,"ok")
 
@@ -89,8 +90,6 @@ def case_manage_iface(request):
     return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount,})
 
 
-def ajax_jq(request):
-    return render(request,"ajax_jq.html")
 
 def  scenario_manage(request):
     pass
@@ -98,6 +97,22 @@ def  scenario_manage(request):
 #登录页
 def login_ajax(request):
     return render(request,"login.html")
+
+
+@csrf_exempt
+def login_validation(request):
+    uname = request.POST.get('username')
+    password = request.POST.get('password')
+
+    try:
+        user = User.objects.get(username=uname)
+        if uname==user.username and password==user.password:
+            request.session['username']=uname
+            request.session.set_expiry(600) #session过期时间
+            return render(request,'index.html')
+    except Exception as ex:
+        return JsonResponse({'res':'用记名或密码错误'})
+
 
 #基础页
 def base_page(request):
