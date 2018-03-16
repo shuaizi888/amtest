@@ -7,7 +7,6 @@
 
 <!--add table to data -->
 <div>
-<<<<<<< HEAD
     <div class="bs-example bs-example-form" role="form">
         <div class="row">
             <div class="col-lg-6 pull-left">
@@ -29,11 +28,6 @@
         </div>
     </div>
 
-=======
-    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
-        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span> 增加用例
-    </button>
->>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
 </div>
 
 <!--views is case data -->
@@ -67,13 +61,8 @@
                     </td>
                     <td>
 
-<<<<<<< HEAD
                         <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
                             <span class="glyphicon glyphicon-wrench" style="color: rgb(255, 255, 255);">修改</span>
-=======
-                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
-                            <span class="glyphicon glyphicon-wrench" style="color: rgb(100, 146, 191);">修改</span>
->>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
                         </button>
 
                         <button class="btn btn-danger btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
@@ -185,7 +174,6 @@
 
         });
     };
-<<<<<<< HEAD
 
     //选择模态窗口，是新增，还是修改
     function select_func(){
@@ -200,77 +188,6 @@
 
     //确认修改按钮事件
     function modify_case_func(){
-=======
-
-    //选择模态窗口，是新增，还是修改
-    function select_func(){
-        var confirmBtnVal=$("#confirm_submit").html();
-        if(confirmBtnVal=="确认新增"){
-            add_case_func();
-        }
-        if(confirmBtnVal=="确认修改"){
-            modify_case_func();
-        }
-    };
-
-    //确认修改按钮事件
-    function modify_case_func(){
-        //
-        if(confirm("确认要修改吗？")){
-            var flag =1;
-        }else{
-            var flag =0;
-        }
-        if(flag==1){
-            $.ajax({
-                url:'/case_modify_data/',
-                type:'post',
-                data:{
-                    'caseid':$("#save_case_id").val(),
-                    'url':$("#eurl").val(),
-                    'desc':$("#edesc").val(),
-                    'method':$("#emethod1").val(),
-                    'itype':$("#etype").val(),
-                    'data':$("#edata1").val(),
-                    'exresult':$("#eresult").val()
-                },
-                dataType:'text',
-                success:function(data){
-                    window.location.reload();
-                },
-                error:function(){
-                    alert('error');
-                }
-            });
-        }
-    };
-
-</script>
-
-
-<script>
-    //模态窗口标题及提交按钮
-    function changeId(btn){
-        if(btn=="add"){
-            $("#modelTiele").html("增加测试用例");
-            $("#confirm_submit").html("确认新增");
-            $("#eurl").val("");
-            $("#edesc").val("");
-            $("#edata1").val("");
-            $("#eresult").val("");
-        }
-        if(btn=="modify"){
-            $("#modelTiele").html("修改测试用例");
-            $("#confirm_submit").html("确认修改");
-        }
-
-    };
-
-
-
-    //增加测试用例
-    function add_case_func(){
->>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
         //
         if(confirm("确认要修改吗？")){
             var flag =1;
