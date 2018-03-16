@@ -7,16 +7,34 @@
 
 <!--add table to data -->
 <div>
-    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
-        <span class="glyphicon glyphicon-plus" style="color: rgb(100, 164, 60);"></span> 增加用例
-    </button>
+    <div class="bs-example bs-example-form" role="form">
+        <div class="row">
+            <div class="col-lg-6 pull-left">
+                <div class="input-group">
+                    <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" name="addCase" onclick="changeId('add')">
+                        <span class="glyphicon glyphicon-plus" style="color: rgb(255, 255, 255);"></span>增加用例
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-3 pull-right">
+                <div class="input-group">
+                    <input type="text" id="search_input" class="form-control" placeholder="根据描述搜索"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="search_btn">搜索</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!--views is case data -->
 <div>
-    <table  class="table table-striped table-hover table-condensed" id="case_table">
+    <table  class="table table-bordered table-condensed table-hover">
         <thead>
-            <tr>
+            <tr class="active">
                 <th>接口描述</th>
                  <th>接口地址</th>
                  <th>方法</th>
@@ -43,12 +61,12 @@
                     </td>
                     <td>
 
-                        <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
-                            <span class="glyphicon glyphicon-wrench" style="color: rgb(100, 146, 191);">修改</span>
+                        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" id="{{case.id}}" name="dbtn" onclick="select_data('{{case.id}}');changeId('modify')">
+                            <span class="glyphicon glyphicon-wrench" style="color: rgb(255, 255, 255);">修改</span>
                         </button>
 
-                        <button class="btn btn-default btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
-                            <span class="glyphicon glyphicon-remove" style="color: rgb(214, 84, 63);">删除</span>
+                        <button class="btn btn-danger btn-xs" id="{{case.id}}" name="deleteBtn" onclick="delete_case('{{case.id}}')">
+                            <span class="glyphicon glyphicon-remove" style="color: rgb(255, 255, 255);">删除</span>
                         </button>
 
                     </td>
@@ -58,7 +76,11 @@
     </table>
 </div>
 
-<ul class="pagination pagination-sm">
+<ul class="pagination pagination-sm pull-left">
+    {{fpageDesc|safe}}
+</ul>
+
+<ul class="pagination pagination-sm pull-right">
     {{fpageCount|safe}}
 </ul>
 
@@ -228,26 +250,30 @@
             var flag =0;
         }
         if(flag==1){
-            $.ajax({
-                url:'/case_add_data/',
-                type:'post',
-                dataType:'text',
-                data:{
-                'idesc':$("#edesc").val(),
-                'iurl':$("#eurl").val(),
-                'imethod':$("#emethod1").val(),
-                'idata':$("#edata1").val(),
-                'iresult':$("#eresult").val()
-                },
-                error:function(data){
-                    alert("ajax error");
-                },
-                success:function(data){
-                    window.location.reload();
-                }
+            if($("#eurl").val()!="" && $("#edesc").val()!="" && $("#edata1").val()!="" && $("#eresult").val()!="")
+            {
+                $.ajax({
+                    url:'/case_add_data/',
+                    type:'post',
+                    dataType:'text',
+                    data:{
+                    'idesc':$("#edesc").val(),
+                    'iurl':$("#eurl").val(),
+                    'imethod':$("#emethod1").val(),
+                    'idata':$("#edata1").val(),
+                    'iresult':$("#eresult").val()
+                    },
+                    error:function(data){
+                        alert("ajax error");
+                    },
+                    success:function(data){
+                        window.location.reload();
+                    }
 
-            });
-
+                });
+            }else{
+                alert("字段不能为空。");
+            }
         }else{
 
         }

@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from models import case_interface_table,run_interface_table,User
-from django.shortcuts import render,render_to_response,HttpResponseRedirect
+from django.shortcuts import render,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse,JsonResponse
 from django.forms.models import model_to_dict
 
+#自开发的包
+from models import case_interface_table,run_interface_table,User
 from pager import pageInfo
 from modelHelp import ModelClass
-
+from decorator import login_limit
 # Create your views here.
+
+
+@login_limit
 def index(request):
     return render(request,"index.html")
 
 
 #删除测试用例
 @csrf_exempt
+@login_limit
 def case_delete_data(request):
     case_id = int(request.POST.get('caseid'))
     model_class = ModelClass(case_interface_table)
@@ -30,7 +35,9 @@ def case_delete_data(request):
     return HttpResponse(request,"OK")
 
 #修改测试用例
+
 @csrf_exempt
+@login_limit
 def case_modify_data(request):
     exresult = request.POST.get('exresult')
     mcaseid  = request.POST.get('caseid')
@@ -44,7 +51,9 @@ def case_modify_data(request):
     return HttpResponse(request,"ok")
 
 #增加一条测试用例
+
 @csrf_exempt
+@login_limit
 def case_add_data(request):
     insertData = {
                 "ICaseDescription":request.POST.get('idesc'),
@@ -64,6 +73,7 @@ def case_add_data(request):
 
 #查询单条数据
 @csrf_exempt
+@login_limit
 def select_case_data(request):
     caseid = request.POST.get('caseid')
     #数据操作类
@@ -74,30 +84,42 @@ def select_case_data(request):
 
 
 #查询测试用例
+@csrf_exempt
+@login_limit
 def case_manage_iface(request):
     '''
     #分页代码
     '''
     curPage = int(request.GET.get('page','1'))
     allCount = case_interface_table.objects.all().count()
-    fpage = pageInfo(curPage,allCount,5)
+    fpage = pageInfo(curPage,allCount,10)
     fpageCount = fpage.pager()
+
 
     #数据操作类
     model_class = ModelClass(case_interface_table)
     posts = model_class.getDataAll(fpage) #获取所有数据，根据分页获取
 
-    return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount,})
+    return render(request,"iface.html",{"posts":posts,"fpageCount":fpageCount['page_info'],"fpageDesc":fpageCount['page_desc'],})
 
 
 
+@csrf_exempt
+@login_limit
 def  scenario_manage(request):
     pass
+
 
 #登录页
 def login_ajax(request):
     return render(request,"login.html")
 
+
+#注销登录
+@login_limit
+def logout(request):
+    del request.session['username']
+    return HttpResponseRedirect('/')
 
 @csrf_exempt
 def login_validation(request):
@@ -108,8 +130,10 @@ def login_validation(request):
         user = User.objects.get(username=uname)
         if uname==user.username and password==user.password:
             request.session['username']=uname
-            request.session.set_expiry(600) #session过期时间
-        return JsonResponse({'res':1}) #1验证成功
+            request.session.set_expiry(0) #session过期时间 0用户关闭浏览器，即失效
+            return JsonResponse({'res':1}) #1验证成功
+        else:
+            return JsonResponse({'res':0}) #0验证失败
     except Exception as ex:
         return JsonResponse({'res':0}) #0验证失败
 
@@ -142,10 +166,15 @@ def user_register(request):
         return JsonResponse({"res":0}) #0用户名已被注册
 
 
+#系统设置
+@login_limit
+def system(request):
+    return render(request,"system.html")
 
 #基础页
 def base_page(request):
     return render(request,"base.html")
+
 
 
 

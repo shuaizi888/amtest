@@ -26,10 +26,12 @@ urlpatterns = [
     url(r'^login_validation/$',views.login_validation),
     url(r'^register/$',views.register),
     url(r'^user_register/$',views.user_register),
+    url(r'^logout/$',views.logout),
     url(r'^$',views.login_ajax,name='login_ajax'),
     url(r'^base_page/$',views.base_page),
     url(r'^case_add_data/$',views.case_add_data),
     url(r'^case_delete_data/$',views.case_delete_data),
     url(r'^case_modify_data/$',views.case_modify_data),
     url(r'^select_case_data/$',views.select_case_data),
+    url(r'^system/$',views.system),
 ]
