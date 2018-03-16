@@ -26,7 +26,10 @@ urlpatterns = [
     url(r'^login_validation/$',views.login_validation),
     url(r'^register/$',views.register),
     url(r'^user_register/$',views.user_register),
+<<<<<<< HEAD
     url(r'^logout/$',views.logout),
+=======
+>>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
     url(r'^$',views.login_ajax,name='login_ajax'),
     url(r'^base_page/$',views.base_page),
     url(r'^case_add_data/$',views.case_add_data),

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AMTP.iml" filepath="$PROJECT_DIR$/.idea/AMTP.iml" />
+      <module fileurl="file://D:/.idea/AMTP.iml" filepath="D:/.idea/AMTP.iml" />
+      <module fileurl="file://D:/jenkins/testergs/.idea/testergs.iml" filepath="D:/jenkins/testergs/.idea/testergs.iml" />
     </modules>
   </component>
 </project>
-

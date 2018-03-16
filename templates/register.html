@@ -41,7 +41,11 @@
                     <div class="form-group col-md-offset-9">
                         <button  type="button" class="btn btn-success pull-right" id="submit">注册</button>
                     </div>
+<<<<<<< HEAD
                     <div class="form-group col-md-offset-12">
+=======
+                    <div class="form-group col-md-offset-9">
+>>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
                         <i class="fa fa-exclamation-triangle fa-lg" id="display_text"></i>
                     </div>
                 </div>
@@ -52,6 +56,7 @@
         $("#submit").click(function(){
             if($("#username").val()!="" && $("#password").val()!="" && $("#email").val()!="")
             {
+<<<<<<< HEAD
                 if(username_validate($("#username").val()) && email_validate($("#email").val()))
                 {
                     $.ajax({
@@ -79,6 +84,33 @@
                         }
                     });
                 }
+=======
+                $.ajax({
+                    url:'/user_register/',
+                    type:'post',
+                    data:{
+                        'username':$("#username").val(),
+                        'password':$("#password").val(),
+                        'email':$("#email").val()
+                    },
+                    dataType:'json',
+                    success:function(args){
+                        if(args.res==1){
+                            $("#display_text").html("注册成功;3秒后自动跳转到登录界面");
+                            setTimeout(function(){
+                                window.location ="/";
+                            },3000);
+
+                        }else{
+                            $("#display_text").html("用户名已被注册.");
+                        };
+                    },
+                    error:function(data){
+                        alert('error');
+                    }
+                    });
+
+>>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
             }
             else
             {
@@ -86,6 +118,7 @@
             }
         });
 
+<<<<<<< HEAD
 
         //验证用户名
         function username_validate(username){
@@ -108,6 +141,8 @@
                 return true;
             }
         };
+=======
+>>>>>>> bb3c0f05c539ee24d6a1fc1126e5997bbd77cadf
     </script>
 
 </body>
