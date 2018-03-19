@@ -26,7 +26,8 @@ SECRET_KEY = '%_3r6+uw%=e8baaw@cjqojblg25%rdn9lb^%1svg^r47y35#2i'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+DEFAULT_CHARSET = 'utf-8'
+FILE_CHARSET = 'utf-8'
 
 # Application definition
 
@@ -121,11 +122,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_DIR=os.path.join(BASE_DIR,'static')
-STATICFILES_DIRS=(
-    ("css",os.path.join(STATIC_DIR,'css')),
-    ("js",os.path.join(STATIC_DIR,'js')),
-    ("images",os.path.join(STATIC_DIR,'images')),
-)
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS=(
+    ("css",os.path.join(STATIC_ROOT,'css')),
+    ("js",os.path.join(STATIC_ROOT,'js')),
+    ("images",os.path.join(STATIC_ROOT,'images')),
+    ("font",os.path.join(STATIC_ROOT,'font')),
+)
+
 LOGIN_URL = '/login/'

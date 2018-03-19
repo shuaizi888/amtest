@@ -19,6 +19,7 @@ from amt import views
 from amt import views_user
 from amt import views_login
 from amt import views_case
+from amt import views_run
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -40,7 +41,10 @@ urlpatterns = [
     url(r'^case_modify_data/$',views_case.case_modify_data),
     url(r'^select_case_data/$',views_case.select_case_data),
     url(r'^iface/$',views_case.case_manage_iface),
+    url(r'^select_all_ajax/$',views_case.select_all_ajax),
     url(r'^scenario_manage/$',views.scenario_manage),
 
     url(r'^system/$',views.system),
+
+    url(r'^run_test/$',views_run.run_test),
 ]
